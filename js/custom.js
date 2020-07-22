@@ -18,6 +18,7 @@
   /*************************
          Sticky
 *************************/
+
   EGOSMART.isSticky = function () {
     $(window).on("scroll", function (event) {
       var scroll = $(window).scrollTop();
@@ -32,12 +33,14 @@
   /*************************
       Tooltip
 *************************/
+
   $('[data-toggle="tooltip"]').tooltip();
   $('[data-toggle="popover"]').popover();
 
   /*************************
       Magnific Popup
   *************************/
+
   EGOSMART.mediaPopups = function () {
     if (
       $(".popup-single").exists() ||
@@ -101,9 +104,11 @@
       }
     }
   };
+
   /*************************
      Back to top
 *************************/
+
   EGOSMART.goToTop = function () {
     var $goToTop = $("#back-to-top");
     $goToTop.hide();
@@ -122,8 +127,43 @@
     });
   };
 
+  /*************************
+     Smooth scroll
+*************************/
+
+  $("a[href^='#']").on("click", function (e) {
+    // prevent default anchor click behavior
+    e.preventDefault();
+
+    // store hash
+    var hash = this.hash;
+    if (hash) {
+      // animate
+      $("html, body").animate(
+        {
+          scrollTop: $(hash).offset().top,
+        },
+        1000,
+        function () {
+          // when done, add hash to url
+          // (default click behaviour)
+          window.location.hash = hash;
+        }
+      );
+    }
+  });
+
+  $("body").scrollspy({
+    target: ".bs-docs-sidebar",
+    offset: 40,
+  });
+
   //Document ready functions
   $document.ready(function () {
+    $("body").scrollspy({
+      target: ".bs-docs-sidebar",
+      offset: 40,
+    });
     EGOSMART.isSticky(), EGOSMART.goToTop(), EGOSMART.mediaPopups();
   });
 })(jQuery);
